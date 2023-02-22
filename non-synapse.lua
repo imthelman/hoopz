@@ -1,0 +1,166 @@
+local reset = false
+
+pcall(function()
+	if _G.stepped then
+		reset = true
+		_G.stepped:Disconnect()
+		_G.input:Disconnect()
+		_G.charAdded:Disconnect()
+		_G.charAdded = nil
+		_G.stepped = nil
+		_G.input = nil
+		print("RESET")
+	end
+
+	if not reset then
+		print("LOADED")
+	end
+end)
+
+local plr = game.Players.LocalPlayer
+local uis = game:GetService("UserInputService")
+local rs = game:GetService("RunService")
+
+local lib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local window = lib:MakeWindow({Name = "LMan's Hoopz UI"})
+local main = window:MakeTab({Name = "Main"})
+local uiss = window:MakeTab({Name = "Other Uis"})
+
+
+main:AddToggle({Name = "Aimbot", default = false, Callback = function(v)
+    if v then
+       _G.Aimbot = true
+       local AimbotGui = Instance.new("ScreenGui")
+local AimbotFrame = Instance.new("Frame")
+local RangeText = Instance.new("TextLabel")
+local Basketball = game:GetService("Players").LocalPlayer.Character:WaitForChild("Basketball")
+
+
+AimbotGui.Name = "AimbotGui"
+AimbotGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+AimbotGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+AimbotFrame.Name = "AimbotFrame"
+AimbotFrame.Parent = AimbotGui
+AimbotFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AimbotFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+AimbotFrame.Position = UDim2.new(0.389353633, 0, 0, 0)
+AimbotFrame.Size = UDim2.new(0, 290, 0, 45)
+
+RangeText.Name = "RangeText"
+RangeText.Parent = AimbotFrame
+RangeText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+RangeText.BackgroundTransparency = 1.000
+RangeText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+RangeText.Position = UDim2.new(0, 0, -0.111111283, 0)
+RangeText.Size = UDim2.new(0, 290, 0, 50)
+RangeText.Font = Enum.Font.SourceSans
+RangeText.Text = "Out Of Range"
+RangeText.TextColor3 = Color3.fromRGB(255, 0, 0)
+RangeText.TextSize = 40.000
+RangeText.TextWrapped = true
+    else
+       _G.Aimbot = false
+       game.Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("AimbotGui"):Destroy()
+    end
+end})
+main:AddToggle({Name = "AutoGaurd/Defend", default = false, Callback = function(v)
+	if v then
+		game:GetService("StarterGui"):SetCore("SendNotification", {Title = "AutoGaurd/Defend", Text = "Press X to go to the nearest ball", Duration = 5, Button1 = "Okay"})
+	end
+	_G.Autogaurd = v
+end})
+main:AddSlider({Name = "WalkSpeed", Min = 16, Max = 19, Default = 16, Color = Color3.fromRGB(80, 80, 255), Increment = 0.1, Callback = function(v)
+	_G.WS = v
+end})
+
+uiss:AddButton({Name = "Hoopz GUI", default = false, Callback = function()
+	loadstring(game:HttpGet("https://paste.ee/r/GWYx2", true))()
+end})
+uiss:AddButton({Name = "Discord Library", default = false, Callback = function()
+	loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/LOLking123456/grrfdgreg/main/h%20mo%20pppz"))()
+end})
+uiss:AddButton({Name = "Infinite Yield FE", default = false, Callback = function()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+end})
+
+
+if workspace:FindFirstChild("PracticeArea") then
+	workspace.PracticeArea.Parent = workspace.Courts
+end
+
+local jumping = false
+
+local ground
+
+local part = workspace:FindPartOnRay(Ray.new(plr.Character.Torso.Position, Vector3.new(0, -100, 5)))
+if part then
+	ground = part
+end
+
+local tracking = false
+local player
+
+function updateNearestPlayerWithBall()
+	local dist = 9e9
+	for i,v in pairs(game.Players:GetPlayers()) do
+		if v.Name ~= plr.Name and v.Character and v.Character:FindFirstChild("Basketball") and not plr.Character:FindFirstChild("Basketball") and (plr.Character.Torso.Position - v.Character.Torso.Position).Magnitude < 50 then
+			local mag = (plr.Character.Torso.Position - v.Character.Torso.Position).Magnitude
+			if dist > mag then
+				dist = mag
+				player = v
+			end
+		end
+	end
+end
+function tablea(a, b)
+	local args = {
+		X1 = a.X,
+		Y1 = a.Y,
+		Z1 = a.Z,
+		X2 = b.X,
+		Y2 = b.Y,
+		Z2 = b.Z
+	};
+
+	return {args[_G.method[1]], args[_G.method[2]], args[_G.method[3]], args[_G.method[4]], args[_G.method[5]], args[_G.method[6]]}
+end
+
+function stepped() pcall(function()
+
+
+		updateNearestPlayerWithBall()
+
+		if _G.WS ~= 16 and plr.Character:WaitForChild("Humanoid").WalkSpeed ~= 0 then
+			plr.Character:WaitForChild("Humanoid").WalkSpeed = _G.WS
+		end
+
+		if _G.Autogaurd and tracking and player and plr.Character and plr.Character:FindFirstChild("Humanoid") and not plr.Character:FindFirstChild("Basketball") and player.Character and player.Character:FindFirstChild("Basketball") then
+			plr.Character.Humanoid:MoveTo(player.Character.Basketball:FindFirstChildOfClass("Part").Position + player.Character.Torso.CFrame.LookVector + ((player.Character.Humanoid.MoveDirection * 2) + (plr.Character.Torso.Velocity.Unit * 3)))
+
+			if (player.Character.Torso.Position.Y - ground.Position.Y) > 2.5 then
+				plr.Character.Humanoid.Jump = true
+			end
+		elseif tracking and player ~= nil and player.Character and plr.Character and plr.Character:FindFirstChild("Basketball") or not player.Character:FindFirstChild("Basketball") then
+			tracking = false
+			return
+		end
+	end)
+	
+end
+
+function began(key, gpe)
+	if not gpe and key.KeyCode == Enum.KeyCode.X and _G.Autogaurd then
+		updateNearestPlayerWithBall()
+		if not tracking then
+            print('Tracking')
+			tracking = true
+		else
+        print('Not Tracking')
+			tracking = false
+		end
+	end
+end
+
+_G.stepped = rs.Stepped:Connect(stepped)
+_G.began = uis.InputBegan:Connect(began)
