@@ -1,5 +1,7 @@
 local reset = false
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/imthelman/LMan-s-Hoopz-UI/main/badaimbot.lua", true))()
+
 pcall(function()
 	if _G.stepped then
 		reset = true
