@@ -1,5 +1,5 @@
 if syn then
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/imthelman/LMan-s-Hoopz-UI/main/synapse", true))()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/imthelman/hoopz/main/synapse", true))()
 else
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/imthelman/LMan-s-Hoopz-UI/main/otherexe", true))()
+  loadstring(game:HttpGet("https://raw.githubusercontent.com/imthelman/hoopz/main/otherexe", true))()
 end
