@@ -1,6 +1,6 @@
 local reset = false
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/imthelman/LMan-s-Hoopz-UI/main/badaimbot.lua", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/imthelman/LMan-s-Hoopz-UI/main/badaimbot", true))()
 
 pcall(function()
 	if _G.stepped then
