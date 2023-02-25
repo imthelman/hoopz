@@ -41,7 +41,7 @@ end
 
 spawn(function()
 while wait() do
-          if _G.Aimbot == true
+          if _G.Aimbot == true then
 game:GetService("Players").LocalPlayer.Character:WaitForChild("Basketball")
 game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("AimbotGui").AimbotFrame.Visible = true
 repeat wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool") == nil
@@ -62,7 +62,7 @@ end)
 
 spawn(function()
 while wait() do
-          if _G.Aimbot == true
+          if _G.Aimbot == true then
 local playerAndHoopDistance = (game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position - getClosest().Position).magnitude
 if playerAndHoopDistance <= 74 then
     game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("AimbotGui").AimbotFrame.RangeText.Text = "In Range"
@@ -98,7 +98,7 @@ end
 spawn(function()
     while wait() do
         if _G.aim then
-            if _G.Aimbot == true
+            if _G.Aimbot == true then
         local power = game:GetService("Players").LocalPlayer.Power
         local playerAndHoopDistance2 = (game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position - getClosest().Position).magnitude
         if playerAndHoopDistance2 <= 74 and playerAndHoopDistance2 > 63.65 then
@@ -210,4 +210,21 @@ game:GetService("Players").LocalPlayer.CameraMode = Enum.CameraMode.Classic
 end
 end
 end)
+end)
+
+pcall(function()
+	if _G.stepped then
+		reset = true
+		_G.stepped:Disconnect()
+		_G.input:Disconnect()
+		_G.charAdded:Disconnect()
+		_G.charAdded = nil
+		_G.stepped = nil
+		_G.input = nil
+		print("RESET")
+	end
+
+	if not reset then
+		print("LOADED")
+	end
 end)
