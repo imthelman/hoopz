@@ -3,5 +3,5 @@
 ## Use
 
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/imthelman/LMan-s-Hoopz-UI/main/Source", true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/imthelman/hoopz/main/source", true))()
 ```
